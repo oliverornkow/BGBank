@@ -1,0 +1,40 @@
+use BGBank
+go
+
+if exists(select * from sys.tables where name = 'Person')
+begin
+drop table Person
+end
+go
+
+if exists(select * from sys.tables where name = 'Adresse')
+begin
+drop table Adresse
+end
+go
+
+create table Adresse(
+ID int identity(1,1) primary key,
+Adresse nvarchar(255),
+Etage nvarchar(5),
+PostNr smallint,
+[By] nvarchar(255)
+
+);
+go
+
+create table Person (
+Fornavn nvarchar(50),
+Efternavn nvarchar(50),
+CPR int,
+primary key(CPR),
+ADRESSE int foreign key references Adresse(ID)
+);
+go
+
+Select * from Person
+
+Select * from Adresse
+
+Insert into Person values ('Oliver', 'Ørnkow', '1111', 1);
+Insert into Adresse values ('Mågevej 22', '2th', '2400', 'København');
